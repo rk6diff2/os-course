@@ -2,10 +2,9 @@
 // Created by starman on 22.09.2019.
 //
 
-#ifndef MAIN_OUT_UTILS_H
-#define MAIN_OUT_UTILS_H
+#ifndef LAB1_UTILS_H_
+#define LAB1_UTILS_H_
 
+int input(unsigned char** string);
 
-int input(char** string);
-
-#endif // MAIN_OUT_UTILS_H
+#endif // LAB1_UTILS_H_

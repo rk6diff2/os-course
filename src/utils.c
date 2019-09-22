@@ -9,8 +9,8 @@
 
 const size_t BUF_SIZE = 256;
 
-int input(char** string) {
-  char *str = (char *)calloc(1, 1);
+int input(unsigned char** string) {
+  unsigned char *str = (unsigned char *)calloc(1, 1);
   if (!str) {
     free(str);
     return EXIT_FAILURE;
@@ -18,7 +18,7 @@ int input(char** string) {
 
   char buffer[BUF_SIZE];
   while (fgets(buffer, BUF_SIZE, stdin)) {
-    char *str_ptr = (char *)realloc(str, strlen(str) + 1 + strlen(buffer));
+    unsigned char *str_ptr = (unsigned char *)realloc(str, strlen(str) + 1 + strlen(buffer));
     if (!str_ptr) {
       free(str);
       return EXIT_FAILURE;
@@ -28,6 +28,5 @@ int input(char** string) {
     strncat(str, buffer, BUF_SIZE);
   }
   *string = str;
-  printf("%s", *string);
   return EXIT_SUCCESS;
 }

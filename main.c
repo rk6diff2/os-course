@@ -9,16 +9,23 @@
 //
 
 #include "include/utils.h"
+#include "include/encoding.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 int main(int argc, char** argv) {
-  printf("Hello World!");
-  char* input_str = NULL;
+  unsigned char* input_str = NULL;
   if (input(&input_str)) {
     return EXIT_FAILURE;
   }
-  printf("%s", input_str);
+  printf("%s\n", input_str);
+  char* encoded_str = NULL;
+  if (koi_to_cp1251(&input_str, &encoded_str)) {
+    free(input_str);
+    return EXIT_FAILURE;
+  }
+  printf("%s\n", encoded_str);
   free(input_str);
-  return 0;
+  free(encoded_str);
+  return EXIT_SUCCESS;
 }
