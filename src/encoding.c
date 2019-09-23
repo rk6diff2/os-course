@@ -7,7 +7,7 @@
 
 int koi_to_cp1251(unsigned char *const *string, char **res_str) {
   int i = 0;
-  char* str_ptr = (char*) malloc(strlen(*string) + 1);
+  char* str_ptr = (char*) malloc(strlen((char*)*string) + 1);
   if (!str_ptr) {
     return EXIT_FAILURE;
   }
@@ -18,7 +18,7 @@ int koi_to_cp1251(unsigned char *const *string, char **res_str) {
     } else if (225 <= (int)(*string)[i] && (int)(*string)[i] <= 255) {
       str_ptr[i] = (char) ((*string)[i] - 160);
     } else {
-      str_ptr[i] = (*string)[i];
+      str_ptr[i] = (char)(*string)[i];
     }
     ++i;
   } while ((*string)[i] != '\0');

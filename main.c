@@ -18,7 +18,6 @@ int main(int argc, char** argv) {
   if (input(&input_str)) {
     return EXIT_FAILURE;
   }
-  printf("%s\n", input_str);
   char* encoded_str = NULL;
   if (koi_to_cp1251(&input_str, &encoded_str)) {
     free(input_str);
