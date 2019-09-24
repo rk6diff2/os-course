@@ -13,4 +13,4 @@ file(GLOB ALL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
 file(GLOB ALL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
 
 
-add_executable(lab1 ${ALL_SOURCES} ${ALL_HEADERS})
+add_executable(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})

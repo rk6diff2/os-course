@@ -8,13 +8,27 @@
 // если текущий и результирующий каталоги совпадают.
 //
 
-#include <stido.h>
+#include "include/utils.h"
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
 
 int main(int argc, char** argv) {
-  char* result_dir = NULL;
-  if (parse_args(&result_dir, argc, argv)) {
-    return 1;
+//  char* result_dir = NULL;
+  char * result_dir = "test/test1/test2";
+//  if (parse_args(&result_dir, argc, argv)) {
+//    return ERROR;
+//  }
+
+  if (check_or_create_path(result_dir)) {
+    return ERROR;
   }
 
-  return 0;
+  char* cur_dir = ".";
+  status result = copy_files(cur_dir, result_dir);
+  if (result != OK) {
+    fprintf(stderr, "An error has occurred. Return code %d\n"
+                    "ERROR: %s\n", result, strerror(errno));
+  }
+  return result;
 }
