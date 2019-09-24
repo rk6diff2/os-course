@@ -14,11 +14,10 @@
 #include <string.h>
 
 int main(int argc, char** argv) {
-//  char* result_dir = NULL;
-  char * result_dir = "test/test1/test2";
-//  if (parse_args(&result_dir, argc, argv)) {
-//    return ERROR;
-//  }
+  char* result_dir = NULL;
+  if (parse_args(&result_dir, argc, argv)) {
+    return ERROR;
+  }
 
   if (check_or_create_path(result_dir)) {
     return ERROR;
@@ -30,5 +29,6 @@ int main(int argc, char** argv) {
     fprintf(stderr, "An error has occurred. Return code %d\n"
                     "ERROR: %s\n", result, strerror(errno));
   }
+
   return result;
 }

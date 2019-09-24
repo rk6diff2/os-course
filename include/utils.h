@@ -15,11 +15,6 @@ typedef enum {
   IS_FILE,
 } status;
 
-typedef struct {
-  char* first;
-  int second;
-} Param;
-
 /**
  * Parse arguments from command line
  * @param {char**} path
