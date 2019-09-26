@@ -15,16 +15,6 @@
 
 const int RWXR_XR_X = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH; // 755
 
-status parse_args(char **path, int argc, char **argv) {
-  if (argc < 2) {
-    *path = NULL;
-    fprintf(stderr, "Usage: ./lab2 [path/to/dir]\n");
-    return ERROR;
-  }
-  *path = argv[1];
-  return OK;
-}
-
 status check_or_create_dir_(char * path)  {
   struct stat file_stat;
   int ret_val = stat(path, &file_stat);
@@ -166,7 +156,7 @@ status copy_files(char *path_from, char *path_to) {
         access_status = access(dir->d_name, R_OK);
         if (access_status < 0) {
           printf ("File is not readable (access denied): %s\n", dir->d_name);
-          return PERMISSION_DENIED;
+//          return PERMISSION_DENIED;
         }
 
         status result = copy_file(path_to, dir->d_name);

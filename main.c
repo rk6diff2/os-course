@@ -9,6 +9,7 @@
 //
 
 #include "include/utils.h"
+#include "include/parser.h"
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>

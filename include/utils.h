@@ -16,15 +16,6 @@ typedef enum {
 } status;
 
 /**
- * Parse arguments from command line
- * @param {char**} path
- * @param {int} argc
- * @param {char**} argv
- * @return {status} stat
- */
-status parse_args(char **path, int argc, char **argv);
-
-/**
  * Copying files from path_form dir to path_to dir
  * @param {char*} path_from - path to departure dir
  * @param {char*} path_to - path to destination dir
