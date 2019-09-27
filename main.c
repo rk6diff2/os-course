@@ -8,14 +8,14 @@
 // если текущий и результирующий каталоги совпадают.
 //
 
-#include "include/utils.h"
 #include "include/parser.h"
+#include "include/utils.h"
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char** argv) {
-  char* result_dir = NULL;
+int main(int argc, char **argv) {
+  char *result_dir = NULL;
   if (parse_args(&result_dir, argc, argv)) {
     return ERROR;
   }
@@ -24,11 +24,13 @@ int main(int argc, char** argv) {
     return ERROR;
   }
 
-  char* cur_dir = ".";
+  char *cur_dir = ".";
   status result = copy_files(cur_dir, result_dir);
   if (result != OK) {
-    fprintf(stderr, "An error has occurred. Return code %d\n"
-                    "ERROR: %s\n", result, strerror(errno));
+    fprintf(stderr,
+            "An error has occurred. Return code %d\n"
+            "ERROR: %s\n",
+            result, strerror(errno));
   }
 
   return result;

@@ -9,13 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <sys/mman.h>
 
 const int RWXR_XR_X = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH; // 755
 
-status check_or_create_dir_(char * path)  {
+status check_or_create_dir_(char *path) {
   struct stat file_stat;
   int ret_val = stat(path, &file_stat);
   if (ret_val || !S_ISDIR(file_stat.st_mode)) {
@@ -26,7 +26,7 @@ status check_or_create_dir_(char * path)  {
   return OK;
 }
 
-status check_or_create_path(char* path) {
+status check_or_create_path(char *path) {
   assert(path != NULL);
   char *path_copy = path;
   char delimiter = '/';
@@ -98,13 +98,7 @@ status copy_file(const char *path_to, const char *file) {
       return ERROR;
     }
 
-    void *src = mmap(
-        0,
-        file_stat.st_size,
-        PROT_READ,
-        MAP_SHARED,
-        fd_in,
-        0);
+    void *src = mmap(0, file_stat.st_size, PROT_READ, MAP_SHARED, fd_in, 0);
     if (src == MAP_FAILED) {
       close(fd_in);
       close(fd_out);
@@ -112,11 +106,8 @@ status copy_file(const char *path_to, const char *file) {
       return ERROR;
     }
 
-    void *dst = mmap(0,
-        file_stat.st_size,
-        PROT_READ | PROT_WRITE, MAP_SHARED,
-        fd_out,
-        0);
+    void *dst = mmap(0, file_stat.st_size, PROT_READ | PROT_WRITE, MAP_SHARED,
+                     fd_out, 0);
     if (dst == MAP_FAILED) {
       close(fd_in);
       close(fd_out);
@@ -151,12 +142,13 @@ status copy_files(char *path_from, char *path_to) {
   if (dir_from) {
     struct dirent *dir = readdir(dir_from);
     do {
-      printf("%d-%lu-%d %s\n", dir->d_type, dir->d_ino, dir->d_reclen, dir->d_name);
+      printf("%d-%lu-%d %s\n", dir->d_type, dir->d_ino, dir->d_reclen,
+             dir->d_name);
       if (dir->d_type == DT_REG) {
         access_status = access(dir->d_name, R_OK);
         if (access_status < 0) {
-          printf ("File is not readable (access denied): %s\n", dir->d_name);
-//          return PERMISSION_DENIED;
+          printf("File is not readable (access denied): %s\n", dir->d_name);
+          //          return PERMISSION_DENIED;
         }
 
         status result = copy_file(path_to, dir->d_name);

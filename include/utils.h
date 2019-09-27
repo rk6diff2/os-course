@@ -21,14 +21,14 @@ typedef enum {
  * @param {char*} path_to - path to destination dir
  * @return {status} stat
  */
-status copy_files(char* path_from, char* path_to);
+status copy_files(char *path_from, char *path_to);
 
 /**
  * Check is path exist and if it not then create it
  * @param {char*} path - path to dir
  * @return {status} stat
  */
-status check_or_create_path(char* path);
+status check_or_create_path(char *path);
 
 /**
  * Copy file from current dir to path_to dir
