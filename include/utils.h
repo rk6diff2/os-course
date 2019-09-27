@@ -5,6 +5,6 @@
 #ifndef LAB1_UTILS_H_
 #define LAB1_UTILS_H_
 
-int input(unsigned char** string);
+int input(unsigned char **string);
 
 #endif // LAB1_UTILS_H_

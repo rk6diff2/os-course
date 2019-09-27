@@ -8,18 +8,18 @@
 // стандартного ввода и помещать результат в поток стандартного вывода.
 //
 
-#include "include/utils.h"
 #include "include/encoding.h"
+#include "include/utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char** argv) {
-  unsigned char* input_str = NULL;
+int main(int argc, char **argv) {
+  unsigned char *input_str = NULL;
   if (input(&input_str)) {
     return EXIT_FAILURE;
   }
-  char* encoded_str = NULL;
-  if (koi_to_cp1251(&input_str, &encoded_str)) {
+  char *encoded_str = NULL;
+  if (koi_to_cp1251(&encoded_str, &input_str)) {
     free(input_str);
     return EXIT_FAILURE;
   }
