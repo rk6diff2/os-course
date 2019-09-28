@@ -2,8 +2,8 @@
 // Created by starman on 23.09.2019.
 //
 
-#ifndef LAB2_UTILS_H
-#define LAB2_UTILS_H
+#ifndef LAB2_UTILS_H_
+#define LAB2_UTILS_H_
 
 typedef enum {
   NOT_FOUND = -4,
@@ -38,4 +38,4 @@ status check_or_create_path(char *path);
  */
 status copy_file(const char *path_to, const char *file);
 
-#endif // LAB2_UTILS_H
+#endif // LAB2_UTILS_H_

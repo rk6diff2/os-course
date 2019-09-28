@@ -14,9 +14,15 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+// access rights
 const int RWXR_XR_X = S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH; // 755
 
-status check_or_create_dir_(char *path) {
+/**
+ * Check path to dir and create directories if it is not exist
+ * @param {const char * const} path - path to dir
+ * @return {status} - status of function work
+ */
+status check_or_create_dir_(const char * const path) {
   assert(path != NULL);
   struct stat file_stat;
   int ret_val = stat(path, &file_stat);
