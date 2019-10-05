@@ -3,6 +3,7 @@
 //
 
 #include "include/utils.h"
+#include "include/memory.h"
 #include <assert.h>
 #include <dirent.h>
 #include <fcntl.h>
@@ -34,9 +35,34 @@ status check_or_create_dir_(const char * const path) {
   return OK;
 }
 
+/**
+ *
+ * @param path
+ * @return
+ */
+status check_path_on_current_(const char * const path) {
+  const int BUF_SIZE = 1024;
+  char dir_buff[BUF_SIZE];
+  char *current_dir = getcwd(dir_buff, BUF_SIZE);
+  if (!current_dir) {
+    return ERROR;
+  }
+  chdir(path);
+  char user_dir[BUF_SIZE];
+  char *user_ptr = getcwd(user_dir, BUF_SIZE);
+  chdir(current_dir);
+  if (!user_ptr) {
+    return ERROR;
+  }
+  if (strcmp(current_dir, user_ptr) == 0) {
+    return IS_CURRENT_DIR;
+  }
+  return OK;
+}
+
 status check_or_create_path(char *path) {
   assert(path != NULL);
-  char *cur_path = (char *)malloc(strlen(path));
+  char *cur_path = (char *)new(strlen(path));
   if (!cur_path) {
     return ERROR;
   }
@@ -49,7 +75,7 @@ status check_or_create_path(char *path) {
       strncpy(cur_path, path, token - path);
       cur_path[token - path] = '\0';
       if (check_or_create_dir_(cur_path)) {
-        free(cur_path);
+        delete(cur_path);
         return ERROR;
       }
       path_copy = ++token;
@@ -58,12 +84,12 @@ status check_or_create_path(char *path) {
   }
 
   if (check_or_create_dir_(path)) {
-    free(cur_path);
+    delete(cur_path);
     return ERROR;
   }
-
-  free(cur_path);
-  return OK;
+  delete(cur_path);
+  status result = check_path_on_current_(path);
+  return result;
 }
 
 status copy_file(const char *path_to, const char *file) {
@@ -76,7 +102,7 @@ status copy_file(const char *path_to, const char *file) {
       return ERROR;
     }
 
-    char *new_path = (char *)malloc(strlen(path_to) + strlen(file) + 2);
+    char *new_path = (char *)new(strlen(path_to) + strlen(file) + 2);
     if (!new_path) {
       return ERROR;
     }
@@ -85,7 +111,7 @@ status copy_file(const char *path_to, const char *file) {
     int fd_out = open(new_path, O_CREAT | O_RDWR | O_TRUNC, 0644);
     if (fd_out < 0) {
       close(fd_in);
-      free(new_path);
+      delete(new_path);
       return ERROR;
     }
 
@@ -118,7 +144,7 @@ status copy_file(const char *path_to, const char *file) {
   err_handler:
     close(fd_in);
     close(fd_out);
-    free(new_path);
+    delete(new_path);
     return error ? ERROR : OK;
   }
   return IS_DIR;
@@ -131,13 +157,6 @@ status copy_files(char *path_from, char *path_to) {
   if (access_status < 0) {
     perror("Directory is not readable (access denied)\n");
     return PERMISSION_DENIED;
-  }
-
-  const int BUF_SIZE = 1024;
-  char dir_buff[BUF_SIZE];
-  char *current_dir = getcwd(dir_buff, BUF_SIZE);
-  if (!current_dir) {
-    return ERROR;
   }
 
   DIR *dir_from = opendir(path_from);

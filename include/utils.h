@@ -13,6 +13,7 @@ typedef enum {
   OK,
   IS_DIR,
   IS_FILE,
+  IS_CURRENT_DIR
 } status;
 
 /**

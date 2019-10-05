@@ -20,12 +20,13 @@ int main(int argc, char **argv) {
     return ERROR;
   }
 
-  if (check_or_create_path(result_dir)) {
-    return ERROR;
+  status result = check_or_create_path(result_dir);
+  if (result != OK) {
+    return result;
   }
 
   char *cur_dir = ".";
-  status result = copy_files(cur_dir, result_dir);
+  result = copy_files(cur_dir, result_dir);
   if (result != OK) {
     fprintf(stderr,
             "An error has occurred. Return code %d\n"
